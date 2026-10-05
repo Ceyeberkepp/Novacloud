@@ -75,13 +75,13 @@ export const ApplicationsView: React.FC<ApplicationsViewProps> = ({
   };
   const [deployStep, setDeployStep] = useState(1);
   const [sourceType, setSourceType] = useState<'git' | 'container' | 'template'>('git');
-  const [repoUrl, setRepoUrl] = useState('https://github.com/cyverax/jobfinder-ai-core');
+  const [repoUrl, setRepoUrl] = useState('');
   const [branch, setBranch] = useState('main');
   const [buildCommand, setBuildCommand] = useState('npm run build');
   const [outputDir, setOutputDir] = useState('dist');
-  const [envVars, setEnvVars] = useState('NODE_ENV=production\nPORT=3000\nAI_MODEL=nova-flash-1');
+  const [envVars, setEnvVars] = useState('NODE_ENV=production\nPORT=3000');
   const [cpuSize, setCpuSize] = useState('2 vCPU / 4 GB RAM');
-  const [domainName, setDomainName] = useState('app-preview-72.cyverax.run');
+  const [domainName, setDomainName] = useState('');
   const [deployStatus, setDeployStatus] = useState<'idle' | 'building' | 'deployed'>('idle');
   const [logs, setLogs] = useState<string[]>([]);
   const [redeployingId, setRedeployingId] = useState<string | null>(null);
@@ -94,48 +94,14 @@ export const ApplicationsView: React.FC<ApplicationsViewProps> = ({
     setTimeout(() => setToastMessage(null), 3500);
   };
 
-  const handleRedeploy = (appId: string, appName: string) => {
-    setRedeployingId(appId);
-    setTimeout(() => {
-      setApps((prev) =>
-        prev.map((a) => (a.id === appId ? { ...a, lastDeploy: 'Just now', status: 'Running' } : a))
-      );
-      setRedeployingId(null);
-      showToast(`Workload ${appName} redeployed successfully (Zero-Downtime Rolling Update).`);
-    }, 1800);
+  const handleRedeploy = (_appId: string, _appName: string) => {
+    showToast('Redeploy is disabled until a real application provider is connected.');
   };
 
   const startDeploymentSimulation = () => {
-    setDeployStatus('building');
-    setLogs([
-      '[17:40:01] Initializing Cyverax Nova Builder v4.2...',
-      `[17:40:03] Cloning repository ${repoUrl} (branch: ${branch})...`,
-      '[17:40:05] Analyzing stack: TypeScript / React 19 / Node 22 detected.',
-      '[17:40:08] Installing project dependencies with pnpm...',
-      `[17:40:12] Executing build command: ${buildCommand}...`,
-      '[17:40:17] Optimizing client bundle & CSS assets...',
-      `[17:40:20] Generated deployment artifact in ./${outputDir}`,
-      '[17:40:22] Container image nova-reg.io/tenant/app-72:v1.0.4 built successfully.',
-      '[17:40:24] Provisioning zero-downtime routing on Anycast ALB...',
-      `[17:40:26] Automated SSL certificate provisioned for https://${domainName}`,
-      '[17:40:28] Health check probe HTTP /api/health returned 200 OK (14ms).',
-      '[17:40:30] APPLICATION LIVE AND READY TO RECEIVE GLOBAL TRAFFIC.',
-    ]);
-
-    setTimeout(() => {
-      setDeployStatus('deployed');
-      const newApp: ApplicationItem = {
-        id: `app-${Date.now().toString().slice(-4)}`,
-        name: domainName.split('.')[0] || 'nova-service',
-        type: 'Web Service',
-        status: 'Running',
-        url: domainName,
-        branch: branch,
-        replicas: 2,
-        lastDeploy: 'Just now',
-      };
-      setApps((prev) => [newApp, ...prev]);
-    }, 2500);
+    setDeployStatus('idle');
+    setLogs([]);
+    showToast('Deployment is disabled until a real application provider is connected.');
   };
 
   return (
@@ -510,7 +476,7 @@ export const ApplicationsView: React.FC<ApplicationsViewProps> = ({
                 <div className="space-y-2">
                   {[
                     { name: 'Standard (1 vCPU / 2 GB RAM)', cost: '$18 / mo', note: 'Ideal for small APIs & dev prototypes' },
-                    { name: 'Performance (2 vCPU / 4 GB RAM)', cost: '$36 / mo', note: 'Recommended for JobFinderAI worker service' },
+                    { name: 'Performance (2 vCPU / 4 GB RAM)', cost: 'Provider pricing', note: 'General application workload' },
                     { name: 'High-Compute (4 vCPU / 8 GB RAM)', cost: '$72 / mo', note: 'Large workloads & heavy background jobs' },
                   ].map((tier) => (
                     <div
@@ -799,9 +765,7 @@ export const ApplicationsView: React.FC<ApplicationsViewProps> = ({
               </thead>
               <tbody className={`divide-y ${isLight ? 'divide-slate-200' : 'divide-slate-800/60'}`}>
                 {[
-                  { domain: 'jobfinder.ai', target: 'jobfinder-ai-core', dns: 'Verified (A/AAAA)', ssl: 'TLS 1.3 (Auto-renews 58d)', edge: 'Global Anycast (24 PoPs)' },
-                  { domain: 'api.cyverax.run', target: 'nova-api-gateway', dns: 'Verified (CNAME)', ssl: 'TLS 1.3 (Auto-renews 72d)', edge: 'Global Anycast (24 PoPs)' },
-                  { domain: 'staging.jobfinder.internal', target: 'jobfinder-staging', dns: 'Private VPC DNS', ssl: 'Internal CA Root', edge: 'VPC Peered Ingress' },
+                  
                 ].map((d, i) => (
                   <tr key={i} className={`transition-colors ${isLight ? 'hover:bg-slate-50' : 'hover:bg-slate-800/40'}`}>
                     <td className="py-3 px-4">
