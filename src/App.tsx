@@ -34,6 +34,7 @@ import {
   AIRecommendation,
   ApplicationItem,
   DatabaseItem,
+  NotificationItem,
   SecurityAlert,
   StorageItem,
   VMInstance,
@@ -77,7 +78,7 @@ export default function App() {
 
   // Domain Data State
   const [vms, setVms] = useState<VMInstance[]>([]);
-  const [notifications, setNotifications] = useState([]);
+  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
   const [applications, setApplications] = useState<ApplicationItem[]>([]);
   const [databases, setDatabases] = useState<DatabaseItem[]>([]);
   const [storage, setStorage] = useState<StorageItem[]>([]);
