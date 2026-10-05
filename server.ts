@@ -160,6 +160,31 @@ app.get('/api/dashboard', requireAuth, async (_req, res) => {
   });
 });
 
+app.get('/api/activity', requireAuth, async (_req, res) => {
+  const result = await pool.query(
+    `SELECT id, actor, action, resource, status, source_ip AS ip, created_at AS timestamp
+       FROM activity_events ORDER BY created_at DESC LIMIT 250`
+  );
+  res.json(result.rows);
+});
+
+app.get('/api/iam/users', requireAuth, async (_req, res) => {
+  const result = await pool.query(
+    `SELECT id, email, display_name AS "displayName", role, active,
+            created_at AS "createdAt", last_login_at AS "lastLoginAt"
+       FROM users ORDER BY created_at ASC`
+  );
+  res.json(result.rows);
+});
+
+app.get('/api/resources', requireAuth, async (req, res) => {
+  const type = typeof req.query.type === 'string' ? req.query.type : null;
+  const result = type
+    ? await pool.query('SELECT id, type, provider, external_id, data, created_at, updated_at FROM resources WHERE type = $1 ORDER BY updated_at DESC', [type])
+    : await pool.query('SELECT id, type, provider, external_id, data, created_at, updated_at FROM resources ORDER BY updated_at DESC');
+  res.json(result.rows);
+});
+
 app.post('/api/resources', requireAuth, async (req, res) => {
   const type = String(req.body?.type || '');
   const data = req.body?.data;
