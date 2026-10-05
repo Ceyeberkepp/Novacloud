@@ -46,13 +46,8 @@ export const DatabasesView: React.FC<DatabasesViewProps> = ({
   const [isCreateDbOpen, setIsCreateDbOpen] = useState(false);
   const [newDbName, setNewDbName] = useState('');
   const [newDbEngine, setNewDbEngine] = useState('PostgreSQL 16');
-  const [sqlQuery, setSqlQuery] = useState('SELECT id, username, email, role, created_at FROM tenant_users LIMIT 5;');
-  const [queryResult, setQueryResult] = useState<any[]>([
-    { id: 'usr-101', username: 'alex.rivera', email: 'alex@enterprise.corp', role: 'admin', created_at: '2025-01-10 09:12' },
-    { id: 'usr-102', username: 'elena.rostova', email: 'elena@cyverax.dev', role: 'engineer', created_at: '2025-01-14 14:22' },
-    { id: 'usr-103', username: 'marcus.vance', email: 'm.vance@partner.io', role: 'viewer', created_at: '2025-02-01 18:40' },
-    { id: 'usr-104', username: 'sarah.chen', email: 'sarah.chen@ai-team.net', role: 'admin', created_at: '2025-02-05 11:05' },
-  ]);
+  const [sqlQuery, setSqlQuery] = useState('');
+  const [queryResult, setQueryResult] = useState<any[]>([]);
   const [isExecutingSql, setIsExecutingSql] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -83,40 +78,16 @@ export const DatabasesView: React.FC<DatabasesViewProps> = ({
 
   const handleCreateCluster = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newDbName.trim()) return;
-    const newDb: DatabaseItem = {
-      id: `db-${Date.now().toString().slice(-4)}`,
-      name: newDbName,
-      engine: newDbEngine,
-      status: 'Online',
-      endpoint: `${newDbName}.prod.cyverax.internal:5432`,
-      storageUsedGb: 12,
-      storageTotalGb: 100,
-      connections: 0,
-      replication: 'Synchronous Multi-AZ',
-    };
-    setDatabases((prev) => [newDb, ...prev]);
-    setIsCreateDbOpen(false);
-    showToast(`Cluster ${newDbName} (${newDbEngine}) initialized with multi-AZ replication.`);
-    setNewDbName('');
+    showToast('Database provisioning is not connected to a provider yet.');
   };
 
   const handleExecuteSql = () => {
-    setIsExecutingSql(true);
-    setTimeout(() => {
-      setIsExecutingSql(false);
-      setQueryResult([
-        { id: 'usr-101', username: 'alex.rivera', email: 'alex@enterprise.corp', role: 'admin', created_at: '2025-01-10 09:12' },
-        { id: 'usr-102', username: 'elena.rostova', email: 'elena@cyverax.dev', role: 'engineer', created_at: '2025-01-14 14:22' },
-        { id: 'usr-103', username: 'marcus.vance', email: 'm.vance@partner.io', role: 'viewer', created_at: '2025-02-01 18:40' },
-        { id: 'usr-104', username: 'sarah.chen', email: 'sarah.chen@ai-team.net', role: 'admin', created_at: '2025-02-05 11:05' },
-      ]);
-      showToast('Query executed against read-pool in 4.8ms. 4 rows returned.');
-    }, 400);
+    setQueryResult([]);
+    showToast('Direct SQL execution is disabled until a real database provider connection is configured.');
   };
 
-  const handleCreateSnapshot = (dbName: string) => {
-    showToast(`Snapshot created for ${dbName}: snap-pitr-${Date.now().toString().slice(-4)}`);
+  const handleCreateSnapshot = (_dbName: string) => {
+    showToast('Snapshot creation is disabled until a real database provider connection is configured.');
   };
 
   return (
