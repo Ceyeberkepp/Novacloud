@@ -84,7 +84,7 @@ export const NetworkingView: React.FC<NetworkingViewProps> = ({
     setLoadingVlans(true);
     try {
       const data = await api.getVlanMatrix();
-      setVlanMatrix(data);
+      setVlanMatrix(data.matrix || []);
     } catch (e) {
       console.error('Failed to fetch VLAN matrix:', e);
     } finally {
@@ -106,7 +106,7 @@ export const NetworkingView: React.FC<NetworkingViewProps> = ({
       showToast('Completed Hardware EVPN/VXLAN Packet Isolation Verification: 0% Cross-Talk.');
     } catch (e) {
       console.error(e);
-      showToast('Isolation verification completed with simulated hardware pass.');
+      showToast('Isolation verification is unavailable until a real network provider is connected.');
     } finally {
       setIsVerifyingVlans(false);
     }
