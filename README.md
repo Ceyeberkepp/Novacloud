@@ -51,3 +51,21 @@ journalctl -u novacloud -n 100 --no-pager
 curl http://127.0.0.1:3000/api/health
 nginx -t
 ```
+
+
+## Real infrastructure data
+
+NovaCloud no longer requires demonstration inventory. The dashboard reads PostgreSQL resources and can synchronize compute and storage inventory directly from Proxmox VE.
+
+For Proxmox, create a dedicated API token with read-only/audit permissions and configure:
+
+```bash
+PROXMOX_HOST=https://your-proxmox-host:8006
+PROXMOX_TOKEN_ID=novacloud@pve!inventory
+PROXMOX_TOKEN_SECRET=your-token-secret
+PROXMOX_VERIFY_TLS=true
+```
+
+If your Proxmox node uses a self-signed certificate during initial testing, set `PROXMOX_VERIFY_TLS=false`. Prefer a trusted certificate for production.
+
+The dashboard refresh path performs a cached Proxmox inventory sync (at most once every 30 seconds). You can also trigger a provider sync through `POST /api/providers/proxmox/sync` while authenticated.
