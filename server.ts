@@ -4,6 +4,8 @@ import connectPgSimple from 'connect-pg-simple';
 import bcrypt from 'bcryptjs';
 import pg from 'pg';
 import path from 'path';
+import os from 'os';
+import fs from 'fs';
 import dotenv from 'dotenv';
 import { GoogleGenAI } from '@google/genai';
 import { createServer as createViteServer } from 'vite';
@@ -89,6 +91,55 @@ async function requireAuth(req: Request, res: Response, next: NextFunction) {
   if (!req.session.userId) return res.status(401).json({ error: 'Authentication required' });
   next();
 }
+
+app.get('/api/system/summary', requireAuth, async (_req, res) => {
+  const rootFs = fs.statfsSync('/');
+  const [resourceCount, userCount, activityCount] = await Promise.all([
+    pool.query('SELECT COUNT(*)::int AS count FROM resources'),
+    pool.query('SELECT COUNT(*)::int AS count FROM users WHERE active = TRUE'),
+    pool.query('SELECT COUNT(*)::int AS count FROM activity_events'),
+  ]);
+
+  const totalMemoryBytes = os.totalmem();
+  const freeMemoryBytes = os.freemem();
+  const network = Object.entries(os.networkInterfaces())
+    .flatMap(([name, addresses]) =>
+      (addresses || [])
+        .filter((address) => address.family === 'IPv4' && !address.internal)
+        .map((address) => ({ name, address: address.address, cidr: address.cidr }))
+    );
+
+  res.json({
+    hostname: os.hostname(),
+    platform: os.platform(),
+    release: os.release(),
+    architecture: os.arch(),
+    cpuModel: os.cpus()[0]?.model || 'Unknown',
+    cpuCount: os.cpus().length,
+    loadAverage: os.loadavg(),
+    uptimeSeconds: os.uptime(),
+    memory: {
+      totalBytes: totalMemoryBytes,
+      usedBytes: totalMemoryBytes - freeMemoryBytes,
+      freeBytes: freeMemoryBytes,
+      usedPercent: totalMemoryBytes > 0
+        ? Number((((totalMemoryBytes - freeMemoryBytes) / totalMemoryBytes) * 100).toFixed(1))
+        : 0,
+    },
+    disk: {
+      totalBytes: rootFs.blocks * rootFs.bsize,
+      freeBytes: rootFs.bavail * rootFs.bsize,
+      usedBytes: (rootFs.blocks - rootFs.bfree) * rootFs.bsize,
+    },
+    database: {
+      resources: resourceCount.rows[0]?.count || 0,
+      activeUsers: userCount.rows[0]?.count || 0,
+      activityEvents: activityCount.rows[0]?.count || 0,
+    },
+    network,
+    timestamp: new Date().toISOString(),
+  });
+});
 
 app.get('/api/dashboard', requireAuth, async (_req, res) => {
   const [resources, activity] = await Promise.all([
