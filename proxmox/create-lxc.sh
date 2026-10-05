@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-REPOSITORY_RAW="https://raw.githubusercontent.com/gustavoalmanzavargas-dotcom/Novacloud/main"
+REPOSITORY_RAW="https://raw.githubusercontent.com/Ceyeberkepp/Novacloud/main"
 
 die() {
   echo "Error: $*" >&2
