@@ -19,7 +19,6 @@ import {
   Share2,
   Check,
 } from 'lucide-react';
-import { TOPOLOGY_NODES } from '../../data/mockData';
 import { NetworkTopologyNode, VlanNetworkMapping } from '../../types';
 import { api } from '../../services/api';
 
@@ -62,9 +61,7 @@ export const NetworkingView: React.FC<NetworkingViewProps> = ({
     setActiveTab(tab);
     onTabChange?.(tab);
   };
-  const [selectedNode, setSelectedNode] = useState<NetworkTopologyNode | null>(
-    TOPOLOGY_NODES.find((n) => n.id === 'node-alb') || null
-  );
+  const [selectedNode, setSelectedNode] = useState<NetworkTopologyNode | null>(null);
   const [isCreateVpcOpen, setIsCreateVpcOpen] = useState(false);
   const [newVpcName, setNewVpcName] = useState('');
   const [newVpcCidr, setNewVpcCidr] = useState('10.20.0.0/16');
