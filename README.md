@@ -1,6 +1,16 @@
 # Cyverax Nova
 
+> **Proprietary software — active development.** Cyverax Nova is not open source. Development/evaluation access does not grant production-use rights. A valid Cyverax Nova license is required for authorized production, commercial, or continued licensed use. See [LICENSE](LICENSE).
+
 Cyverax Nova is a self-hosted cloud-console application. A fresh installation starts with an empty PostgreSQL-backed inventory; it does not load demonstration infrastructure.
+
+## Licensing
+
+NovaCloud is privately developed proprietary software. Source availability in this repository does **not** grant permission to copy, redistribute, modify, sublicense, resell, host for third parties, or deploy the software outside expressly authorized development/evaluation use.
+
+The current builds are for authorized development and testing. Production, commercial, enterprise, hosted-service, redistribution, and other operational use require a valid license or separate written authorization from the software owner.
+
+License enforcement, editions, feature entitlements, instance limits, subscription terms, and commercial pricing may be introduced or changed as development continues.
 
 ## One-command LXC installation
 
@@ -10,7 +20,7 @@ Use a clean Debian 12 or Debian 13 LXC with at least 2 CPU cores, 4 GB RAM, 20 G
 curl -fsSL https://raw.githubusercontent.com/Ceyeberkepp/Novacloud/main/bootstrap.sh | sudo bash
 ```
 
-The bootstrap command downloads the current public release and launches the interactive installer. Run it directly from the LXC console or an SSH session.
+The bootstrap command downloads the current authorized build and launches the interactive installer. Run it directly from the LXC console or an SSH session.
 
 ## Create the LXC from a Proxmox node
 
@@ -30,7 +40,7 @@ git clone https://github.com/Ceyeberkepp/Novacloud.git && \
 cd Novacloud && sudo bash install.sh
 ```
 
-The installer asks for the web hostname, administrator account, optional Gemini key, and optional HTTPS. It automatically installs Node.js, PostgreSQL, Nginx, the database schema, the Nova service, and Let's Encrypt when selected.
+The installer asks for the web hostname, administrator account, optional Gemini key, optional Proxmox provider credentials, and optional HTTPS. It automatically installs Node.js, PostgreSQL, Nginx, the database schema, the Nova service, and Let's Encrypt when selected.
 
 ## Update an installed instance
 
@@ -51,7 +61,6 @@ journalctl -u novacloud -n 100 --no-pager
 curl http://127.0.0.1:3000/api/health
 nginx -t
 ```
-
 
 ## Real infrastructure data
 
