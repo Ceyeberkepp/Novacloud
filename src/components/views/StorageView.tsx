@@ -53,18 +53,8 @@ interface StorageSnapshot {
   retention: string;
 }
 
-const INITIAL_VOLUMES: NVMeVolume[] = [
-  { id: 'vol-09a2ff1b', name: 'vol-root-jobfinder-ai', sizeGb: 100, iops: 12000, throughput: '500 MB/s', attachedTo: 'jobfinder-ai-prod (vm-01)', mountPoint: '/dev/nvme0n1', zone: 'us-atl-1a', status: 'In-Use' },
-  { id: 'vol-88b4ee3c', name: 'vol-postgres-cluster-primary', sizeGb: 500, iops: 25000, throughput: '1000 MB/s', attachedTo: 'db-postgres-primary (vm-03)', mountPoint: '/dev/nvme1n1', zone: 'us-atl-1b', status: 'In-Use' },
-  { id: 'vol-71c3dd2a', name: 'vol-redis-persistence-tier', sizeGb: 80, iops: 10000, throughput: '350 MB/s', attachedTo: 'redis-cache-tier-1 (vm-06)', mountPoint: '/dev/nvme0n1', zone: 'us-atl-1a', status: 'In-Use' },
-  { id: 'vol-34e8aa99', name: 'vol-analytics-scratchpad', sizeGb: 250, iops: 16000, throughput: '600 MB/s', attachedTo: 'analytics-worker-01 (vm-04)', mountPoint: '/dev/nvme0n1', zone: 'us-atl-1b', status: 'In-Use' },
-];
-
-const INITIAL_STORAGE_SNAPSHOTS: StorageSnapshot[] = [
-  { id: 'arc-2025-02-28', name: 'q1-2025-cold-archive-s3', sourceResource: 's3-jobfinder-data-lake', sizeGb: 4800, tier: 'Glacier Deep Archive', created: '2025-02-28 01:00 UTC', retention: '7 Years (Compliance Locked)' },
-  { id: 'arc-2025-02-20', name: 'model-weights-v2-checkpoint', sourceResource: 's3-nova-ai-checkpoints', sizeGb: 840, tier: 'Glacier Instant', created: '2025-02-20 04:30 UTC', retention: '365 Days' },
-  { id: 'arc-2025-02-15', name: 'audit-telemetry-february', sourceResource: 's3-telemetry-firehose', sizeGb: 1200, tier: 'Standard S3', created: '2025-02-15 12:00 UTC', retention: '90 Days' },
-];
+const INITIAL_VOLUMES: NVMeVolume[] = [];
+const INITIAL_STORAGE_SNAPSHOTS: StorageSnapshot[] = [];
 
 export const StorageView: React.FC<StorageViewProps> = ({
   storage: initialStorage,
@@ -85,12 +75,7 @@ export const StorageView: React.FC<StorageViewProps> = ({
   const [newStorageType, setNewStorageType] = useState('S3 Bucket');
   const [newStorageRegion, setNewStorageRegion] = useState('US East (Atlanta)');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
-  const [bucketFiles, setBucketFiles] = useState([
-    { name: 'app-production-assets.tar.gz', size: '1.4 GB', modified: '2 hours ago', type: 'archive' },
-    { name: 'db-nightly-backup-20250212.sql.zst', size: '28.4 GB', modified: '6 hours ago', type: 'database' },
-    { name: 'nova-ai-weights-q8.bin', size: '4.2 GB', modified: '1 day ago', type: 'model' },
-    { name: 'frontend-bundle-v1.0.4.zip', size: '18.2 MB', modified: '2 days ago', type: 'archive' },
-  ]);
+  const [bucketFiles, setBucketFiles] = useState<Array<{ name: string; size: string; modified: string; type: string }>>([]);
 
   const isLight = themeMode === 'light';
 
@@ -129,12 +114,7 @@ export const StorageView: React.FC<StorageViewProps> = ({
   };
 
   const handleUploadFile = () => {
-    const fakeFileName = `uploaded-asset-${Math.floor(Math.random() * 899 + 100)}.png`;
-    setBucketFiles((prev) => [
-      { name: fakeFileName, size: '2.4 MB', modified: 'Just now', type: 'image' },
-      ...prev,
-    ]);
-    showToast(`File ${fakeFileName} uploaded to ${activeBrowseItem?.name} with SHA-256 integrity.`);
+    showToast('No storage provider is connected. Connect a provider before uploading files.');
   };
 
   return (

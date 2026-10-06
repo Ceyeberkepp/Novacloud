@@ -83,32 +83,10 @@ interface SSHKey {
   lastUsed: string;
 }
 
-const INITIAL_IMAGES: OSImage[] = [
-  { id: 'img-u24-noble', name: 'Ubuntu 24.04 LTS (Noble Numbat)', distribution: 'Ubuntu', version: '24.04', arch: 'x86_64', size: '20 GB', type: 'Public Golden', status: 'Ready' },
-  { id: 'img-deb12-bookworm', name: 'Debian 12 (Bookworm Minimal)', distribution: 'Debian', version: '12.4', arch: 'x86_64', size: '10 GB', type: 'Public Golden', status: 'Ready' },
-  { id: 'img-rocky9-ent', name: 'Rocky Linux 9 Enterprise', distribution: 'Rocky', version: '9.3', arch: 'x86_64', size: '25 GB', type: 'Public Golden', status: 'Ready' },
-  { id: 'img-alpine-edge', name: 'Alpine Linux 3.20 Hypervisor', distribution: 'Alpine', version: '3.20', arch: 'x86_64', size: '5 GB', type: 'Public Golden', status: 'Ready' },
-  { id: 'img-cyv-node20', name: 'Cyverax AI Worker (CUDA 12.4 + Node 20)', distribution: 'Ubuntu', version: '22.04', arch: 'x86_64', size: '50 GB', type: 'Custom AMI', status: 'Ready' },
-  { id: 'img-win2022-dc', name: 'Windows Server 2022 Datacenter', distribution: 'Windows', version: '2022', arch: 'x86_64', size: '64 GB', type: 'Public Golden', status: 'Ready' },
-];
-
-const INITIAL_SNAPSHOTS: Snapshot[] = [
-  { id: 'snap-09fa41bc', name: 'jobfinder-ai-prod-nightly', sourceVm: 'jobfinder-ai-prod (vm-01)', sizeGb: 80, created: '2025-02-27 03:00 UTC', encryption: 'AES-256-XTS', status: 'Available' },
-  { id: 'snap-71de22a8', name: 'postgres-data-pre-migration', sourceVm: 'db-postgres-primary (vm-03)', sizeGb: 250, created: '2025-02-26 18:45 UTC', encryption: 'AES-256-XTS', status: 'Available' },
-  { id: 'snap-45bc8819', name: 'analytics-worker-checkpoint', sourceVm: 'analytics-worker-01 (vm-04)', sizeGb: 100, created: '2025-02-25 12:00 UTC', encryption: 'AES-256-XTS', status: 'Available' },
-  { id: 'snap-19ef6631', name: 'redis-cache-state-weekly', sourceVm: 'redis-cache-tier-1 (vm-06)', sizeGb: 40, created: '2025-02-23 00:00 UTC', encryption: 'AES-256-XTS', status: 'Available' },
-];
-
-const INITIAL_GROUPS: InstanceGroup[] = [
-  { id: 'asg-web-tier', name: 'asg-web-frontend-cluster', minSize: 2, desiredSize: 3, maxSize: 8, healthyCount: 3, scalingPolicy: 'Target Tracking: CPU > 75%', region: 'us-atl-1a', status: 'Healthy' },
-  { id: 'asg-ai-workers', name: 'asg-async-gpu-inferencers', minSize: 1, desiredSize: 2, maxSize: 4, healthyCount: 2, scalingPolicy: 'SQS Backlog Depth > 200 items', region: 'us-atl-1b', status: 'Healthy' },
-];
-
-const INITIAL_KEYS: SSHKey[] = [
-  { id: 'key-ed25519-adm', name: 'gustavo-admin-macbook', fingerprint: 'SHA256:7x9qFv/K4mR9sB2Lp8tU1w0y3z6v9x2b5n8q1e4r7t0', type: 'ED25519', created: '2025-01-10', lastUsed: '12 mins ago' },
-  { id: 'key-rsa-deployer', name: 'github-actions-ci-runner', fingerprint: 'SHA256:k3M8pL1q4sT7v0w2y5z8x1b4n7q0e3r6t9u2w5y8z1', type: 'RSA-4096', created: '2025-01-15', lastUsed: '4 hours ago' },
-  { id: 'key-bastion-jump', name: 'bastion-jump-operator-key', fingerprint: 'SHA256:w2y5z8x1b4n7q0e3r6t9u2w5y8z1k3M8pL1q4sT7v0', type: 'ED25519', created: '2025-02-01', lastUsed: 'Yesterday' },
-];
+const INITIAL_IMAGES: OSImage[] = [];
+const INITIAL_SNAPSHOTS: Snapshot[] = [];
+const INITIAL_GROUPS: InstanceGroup[] = [];
+const INITIAL_KEYS: SSHKey[] = [];
 
 export const ComputeView: React.FC<ComputeViewProps> = ({
   vms = [],

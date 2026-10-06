@@ -28,23 +28,13 @@ import { ClientInstancesView } from './components/views/ClientInstancesView';
 import { SettingsView } from './components/views/SettingsView';
 import { LoginScreen } from './components/LoginScreen';
 
-// Mock Data
-import {
-  MOCK_VMS,
-  MOCK_APPLICATIONS,
-  MOCK_DATABASES,
-  MOCK_STORAGE,
-  MOCK_SECURITY_ALERTS,
-  MOCK_AI_RECOMMENDATIONS,
-  MOCK_NOTIFICATIONS,
-  MOCK_ACTIVITY_LOG,
-} from './data/mockData';
 import {
   ActiveView,
   ActivityEvent,
   AIRecommendation,
   ApplicationItem,
   DatabaseItem,
+  NotificationItem,
   SecurityAlert,
   StorageItem,
   VMInstance,
@@ -87,14 +77,14 @@ export default function App() {
   const [launchDeployDirectly, setLaunchDeployDirectly] = useState(false);
 
   // Domain Data State
-  const [vms, setVms] = useState<VMInstance[]>(MOCK_VMS);
-  const [notifications, setNotifications] = useState(MOCK_NOTIFICATIONS);
-  const [applications, setApplications] = useState<ApplicationItem[]>(MOCK_APPLICATIONS);
-  const [databases, setDatabases] = useState<DatabaseItem[]>(MOCK_DATABASES);
-  const [storage, setStorage] = useState<StorageItem[]>(MOCK_STORAGE);
-  const [securityAlerts, setSecurityAlerts] = useState<SecurityAlert[]>(MOCK_SECURITY_ALERTS);
-  const [aiRecommendations, setAiRecommendations] = useState<AIRecommendation[]>(MOCK_AI_RECOMMENDATIONS);
-  const [activities, setActivities] = useState<ActivityEvent[]>(MOCK_ACTIVITY_LOG);
+  const [vms, setVms] = useState<VMInstance[]>([]);
+  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
+  const [applications, setApplications] = useState<ApplicationItem[]>([]);
+  const [databases, setDatabases] = useState<DatabaseItem[]>([]);
+  const [storage, setStorage] = useState<StorageItem[]>([]);
+  const [securityAlerts, setSecurityAlerts] = useState<SecurityAlert[]>([]);
+  const [aiRecommendations, setAiRecommendations] = useState<AIRecommendation[]>([]);
+  const [activities, setActivities] = useState<ActivityEvent[]>([]);
 
   const loadDashboard = async () => {
     const response = await fetch('/api/dashboard');

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-REPOSITORY_URL="https://github.com/gustavoalmanzavargas-dotcom/Novacloud.git"
+REPOSITORY_URL="https://github.com/Ceyeberkepp/Novacloud.git"
 
 if [[ ${EUID} -ne 0 ]]; then
-  echo "Run with sudo: curl -fsSL https://raw.githubusercontent.com/gustavoalmanzavargas-dotcom/Novacloud/main/bootstrap.sh | sudo bash"
+  echo "Run with sudo: curl -fsSL https://raw.githubusercontent.com/Ceyeberkepp/Novacloud/main/bootstrap.sh | sudo bash"
   exit 1
 fi
 
