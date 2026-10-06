@@ -1,0 +1,72 @@
+CYVERAX NOVA PROPRIETARY SOFTWARE LICENSE
+
+Copyright (c) 2026 Cyverax. All rights reserved.
+
+IMPORTANT: Cyverax Nova ("Software") is proprietary, privately developed software.
+It is NOT open-source software and no open-source license is granted.
+
+1. Ownership
+All right, title, and interest in the Software, including its source code,
+object code, user interface, documentation, architecture, designs, trademarks,
+and related intellectual property, are retained by the Software owner and its
+authorized licensors.
+
+2. No General License Grant
+Possession of, access to, or visibility of the Software or its source code does
+not grant permission to use, copy, modify, reproduce, publish, distribute,
+sublicense, sell, lease, host for third parties, or create derivative works from
+the Software.
+
+3. Development and Evaluation
+The Software is currently in active development. Development, testing, preview,
+or evaluation access is permitted only to persons or organizations expressly
+authorized by the Software owner. Such access is temporary, revocable, and does
+not create a production-use license.
+
+4. License Required for Use
+A valid Cyverax Nova license is required for authorized deployment, operation,
+production use, commercial use, or continued use when licensing is enabled or
+otherwise required by the Software owner. License scope, duration, edition,
+features, instance limits, support rights, and fees may be defined separately
+in the applicable commercial license, order, subscription, or written agreement.
+
+5. Restrictions
+Except where expressly authorized in writing or where applicable law does not
+permit the restriction, you may not:
+- copy or redistribute the Software;
+- publish or disclose source code to unauthorized parties;
+- remove or alter copyright, license, ownership, or product notices;
+- sell, rent, lease, sublicense, or commercially exploit the Software;
+- use the Software to provide a hosted or managed service to third parties;
+- reverse engineer, decompile, or disassemble distributed binaries;
+- bypass, disable, alter, or circumvent license validation or enforcement;
+- use development or evaluation builds in production without authorization.
+
+6. Third-Party Components
+The Software may include third-party packages or components. Those components
+remain subject to their respective licenses. Their inclusion does not convert
+Cyverax Nova itself into open-source software.
+
+7. No Warranty
+DEVELOPMENT AND EVALUATION BUILDS ARE PROVIDED "AS IS" AND "AS AVAILABLE,"
+WITHOUT WARRANTIES OF ANY KIND TO THE MAXIMUM EXTENT PERMITTED BY LAW.
+
+8. Limitation of Liability
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE SOFTWARE OWNER AND ITS LICENSORS
+WILL NOT BE LIABLE FOR INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY,
+OR PUNITIVE DAMAGES ARISING FROM USE OF OR INABILITY TO USE THE SOFTWARE.
+
+9. Termination
+Any permission to access or evaluate the Software terminates automatically upon
+breach of these terms or when authorization is withdrawn. Upon termination,
+unauthorized copies must no longer be used or distributed.
+
+10. Commercial Licensing
+Commercial, production, enterprise, redistribution, OEM, hosting, and other
+license rights require a separate written agreement from the Software owner.
+
+NO RIGHTS ARE GRANTED EXCEPT THOSE EXPRESSLY PROVIDED IN A SEPARATE WRITTEN
+LICENSE OR AUTHORIZATION.
+
+For licensing authorization, contact the Software owner through an approved
+Cyverax licensing channel.
